@@ -22,30 +22,30 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-
-@Component
-public class Task implements CommandLineRunner {
-    @DubboReference
-    private DemoService demoService;
-
-    @Override
-    public void run(String... args) throws Exception {
-        System.out.println("Receive result ======> " + proxyHello());
-        System.out.println("Receive rest result ======> " + restHello());
-
-    }
-
-    private String proxyHello() {
-        return demoService.sayHello("world");
-    }
-
-    private String restHello() {
-        RestClient defaultClient = RestClient.create();
-        ResponseEntity<String> result = defaultClient.get()
-                .uri("http://localhost:50052/demo/hello?name=world")
-                .header("Content-type", "application/json")
-                .retrieve()
-                .toEntity(String.class);
-        return result.getBody();
-    }
-}
+//
+////@Component
+//public class Task implements CommandLineRunner {
+//    @DubboReference
+//    private DemoService demoService;
+//
+//    @Override
+//    public void run(String... args) throws Exception {
+//        System.out.println("Receive result ======> " + proxyHello());
+//        System.out.println("Receive rest result ======> " + restHello());
+//
+//    }
+//
+//    private String proxyHello() {
+//        return demoService.sayHello("world");
+//    }
+//
+//    private String restHello() {
+//        RestClient defaultClient = RestClient.create();
+//        ResponseEntity<String> result = defaultClient.get()
+//                .uri("http://localhost:50052/demo/hello?name=world")
+//                .header("Content-type", "application/json")
+//                .retrieve()
+//                .toEntity(String.class);
+//        return result.getBody();
+//    }
+//}

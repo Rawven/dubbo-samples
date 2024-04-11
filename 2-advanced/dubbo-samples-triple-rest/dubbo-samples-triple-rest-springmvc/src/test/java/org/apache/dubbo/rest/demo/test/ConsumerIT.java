@@ -17,6 +17,7 @@
 package org.apache.dubbo.rest.demo.test;
 
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.remoting.http12.HttpStatus;
 import org.apache.dubbo.rest.demo.DemoService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,11 +26,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-@SpringBootTest
+@SpringBootTest(classes = CorsConsumerIT.class)
 @RunWith(SpringRunner.class)
 public class ConsumerIT {
     private static final String providerAddress = System.getProperty("dubbo.address", "localhost");
@@ -54,4 +53,6 @@ public class ConsumerIT {
         // FIXME
         Assert.assertEquals("\"Hello world\"", result.getBody());
     }
+
+
 }

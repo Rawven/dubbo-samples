@@ -16,6 +16,7 @@
  */
 package org.apache.dubbo.rest.demo;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface DemoService {
 
     @RequestMapping(method = RequestMethod.GET, value = "/hello")
+
     String sayHello(@RequestParam("name") String name);
 
     // add more methods
