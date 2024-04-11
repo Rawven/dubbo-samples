@@ -17,7 +17,6 @@
 package org.apache.dubbo.rest.demo.test;
 
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.remoting.http12.HttpStatus;
 import org.apache.dubbo.rest.demo.DemoService;
 import org.junit.Assert;
 import org.junit.Test;
