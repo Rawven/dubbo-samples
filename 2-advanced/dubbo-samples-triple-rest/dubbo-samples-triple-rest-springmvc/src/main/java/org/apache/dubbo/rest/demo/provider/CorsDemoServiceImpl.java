@@ -21,13 +21,9 @@ import org.apache.dubbo.rest.demo.CorsDemoService;
 
 @DubboService
 public class CorsDemoServiceImpl implements CorsDemoService {
-    @Override
-    public String getHello() {
-        return "hello";
-    }
 
     @Override
-    public String postHello() {
+    public String hello() {
         return "hello";
     }
 

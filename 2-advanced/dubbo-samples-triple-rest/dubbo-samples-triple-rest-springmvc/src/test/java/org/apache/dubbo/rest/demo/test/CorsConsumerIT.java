@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 @SpringBootTest(classes = CorsConsumerIT.class)
 @RunWith(SpringRunner.class)
 public class CorsConsumerIT {
-    
+
     private static final String providerAddress = System.getProperty("dubbo.address", "localhost");
 
     private static final Logger logger = Logger.getLogger(CorsConsumerIT.class.getName());

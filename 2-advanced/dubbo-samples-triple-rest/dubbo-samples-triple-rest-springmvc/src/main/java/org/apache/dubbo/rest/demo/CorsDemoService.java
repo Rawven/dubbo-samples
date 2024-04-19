@@ -16,6 +16,7 @@
  */
 package org.apache.dubbo.rest.demo;
 
+import org.apache.dubbo.remoting.http12.HttpMethods;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @CrossOrigin(origins = "http://example.com", allowedHeaders = {"X-Requested-With", "Origin", "Content-Type", "Accept"}, maxAge = 3600)
 public interface CorsDemoService {
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    String getHello();
+    @RequestMapping(value = "/hello", method = {RequestMethod.GET,RequestMethod.POST, RequestMethod.OPTIONS})
+    @CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.OPTIONS})
+    String hello();
 
-    @RequestMapping(value = "/hello", method = RequestMethod.POST)
-    String postHello();
 
     @CrossOrigin(origins = {"http://example.com", "http://example.org"})
     @RequestMapping(value = "/multi-origin", method = RequestMethod.GET)
