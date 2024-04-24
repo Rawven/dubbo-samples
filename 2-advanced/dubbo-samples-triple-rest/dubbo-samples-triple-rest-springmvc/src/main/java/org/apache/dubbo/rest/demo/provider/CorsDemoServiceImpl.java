@@ -57,23 +57,4 @@ public class CorsDemoServiceImpl implements CorsDemoService {
         return "hello";
     }
 
-    @Override
-    public String inValidCredential() {
-        return "hello";
-    }
-
-    @Override
-    public String inValidPrivateWork() {
-        return "hello";
-    }
-
-    @Override
-    public String validCredential() {
-        return "hello";
-    }
-
-    @Override
-    public String validPrivateWork() {
-        return "hello";
-    }
 }

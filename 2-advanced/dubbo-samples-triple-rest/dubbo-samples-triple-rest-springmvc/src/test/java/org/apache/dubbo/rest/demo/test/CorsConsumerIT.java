@@ -49,16 +49,14 @@ public class CorsConsumerIT {
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());
 
-        try {
-             result = defaultClient.post()
+        Assert.assertThrows(HttpClientErrorException.class, () -> {
+              defaultClient.post()
                     .uri("http://" + providerAddress + ":50052/cors/hello")
                     .header("Content-type", "application/json")
                     .header("Origin", "http://not-example.com")
                     .retrieve()
                     .toEntity(String.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals(HttpStatus.FORBIDDEN.getCode(), e.getStatusCode().value());
-        }
+        });
          result = defaultClient.options()
                 .uri("http://" + providerAddress + ":50052/cors/hello")
                 .header("Content-type", "application/json")
@@ -121,6 +119,16 @@ public class CorsConsumerIT {
                 .retrieve()
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());
+
+
+        Assert.assertThrows(HttpClientErrorException.class, () -> {
+             defaultClient.head()
+                    .uri("http://" + providerAddress + ":50052/cors/methods")
+                    .header("Content-type", "application/json")
+                    .header("Origin", "http://example.com")
+                    .retrieve()
+                    .toEntity(String.class);
+        });
     }
 
     @Test
@@ -186,51 +194,6 @@ public class CorsConsumerIT {
                 .uri("http://" + providerAddress + ":50052/cors/max-age")
                 .header("Content-type", "application/json")
                 .header(RestConstants.ACCESS_CONTROL_REQUEST_METHOD, "GET")
-                .retrieve()
-                .toEntity(String.class);
-        Assert.assertEquals("\"hello\"", result.getBody());
-    }
-
-    @Test
-    public void testPrivateNetAndCredential(){
-        RestClient defaultClient = RestClient.create();
-        ResponseEntity<String> result;
-        try {
-            result = defaultClient.get()
-                    .uri("http://" + providerAddress + ":50052/cors/invalidCredential")
-                    .header("Content-type", "application/json")
-                    .header("Origin", "http://example.com")
-                    .retrieve()
-                    .toEntity(String.class);
-        }catch (HttpClientErrorException e){
-            Assert.assertEquals(HttpStatus.FORBIDDEN.getCode(), e.getStatusCode().value());
-        }
-        try {
-
-
-            result = defaultClient.get()
-                    .uri("http://" + providerAddress + ":50052/cors/invalidPrivateWork")
-                    .header("Content-type", "application/json")
-                    .header("Origin", "http://example.com")
-                    .retrieve()
-                    .toEntity(String.class);
-            Assert.assertEquals("\"hello\"", result.getBody());
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals(HttpStatus.FORBIDDEN.getCode(), e.getStatusCode().value());
-        }
-
-        result = defaultClient.get()
-                .uri("http://" + providerAddress + ":50052/cors/validCredential")
-                .header("Content-type", "application/json")
-                .header("Origin", "http://example.com")
-                .retrieve()
-                .toEntity(String.class);
-        Assert.assertEquals("\"hello\"", result.getBody());
-
-        result = defaultClient.get()
-                .uri("http://" + providerAddress + ":50052/cors/validPrivateWork")
-                .header("Content-type", "application/json")
-                .header("Origin", "http://example.com")
                 .retrieve()
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());

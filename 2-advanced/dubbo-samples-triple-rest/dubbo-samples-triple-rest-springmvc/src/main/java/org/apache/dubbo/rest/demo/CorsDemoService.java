@@ -34,7 +34,7 @@ public interface CorsDemoService {
     String getMultiOrigin();
 
     @CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST})
-    @RequestMapping(value = "/methods", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/methods", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.HEAD})
     String getMethods( );
 
     @CrossOrigin(exposedHeaders = {"X-Custom-Header"})
@@ -52,20 +52,4 @@ public interface CorsDemoService {
     @CrossOrigin(origins = "http://example.com", maxAge = 86400)
     @RequestMapping(value = "/max-age", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     String getMaxAge();
-
-    @CrossOrigin(origins = "*", allowCredentials = "true")
-    @RequestMapping(value = "/invalidCredential", method = {RequestMethod.GET})
-    String inValidCredential();
-
-    @CrossOrigin(origins = "*", allowPrivateNetwork = "true")
-    @RequestMapping(value = "/invalidPrivateWork", method = {RequestMethod.GET})
-    String inValidPrivateWork();
-
-    @CrossOrigin(origins = "*", allowCredentials = "false")
-    @RequestMapping(value = "/validCredential", method = {RequestMethod.GET})
-    String validCredential();
-
-    @CrossOrigin(origins = "*", allowPrivateNetwork = "false")
-    @RequestMapping(value = "/validPrivateWork", method = {RequestMethod.GET})
-    String validPrivateWork();
 }

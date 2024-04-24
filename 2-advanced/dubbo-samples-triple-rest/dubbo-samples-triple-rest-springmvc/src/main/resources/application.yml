@@ -19,8 +19,8 @@ dubbo:
   rpc:
     rest:
       cors:
-        allowed-origins: http://dubbo.com
-        allowed-headers: triple
+        allowed-origins: http://dubbo.com, http://dubbo.io
+        allowed-headers: triple,triple-protocol
   application:
       name: dubbo-springboot-triple-rest-springmvc
       qos-port: 33333
