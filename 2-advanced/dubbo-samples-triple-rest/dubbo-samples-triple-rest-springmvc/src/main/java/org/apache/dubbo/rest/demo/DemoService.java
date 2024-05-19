@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/demo")
 public interface DemoService {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/hello")
-
-    String sayHello(@RequestParam("name") String name);
+//    @RequestMapping(method = RequestMethod.GET, value = "/hello")
+//
+//    String sayHello(@RequestParam("name") String name);
 
     // add more methods
 }

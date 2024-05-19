@@ -16,12 +16,13 @@
  */
 package org.apache.dubbo.rest.demo.test;
 
-import org.apache.dubbo.remoting.http12.HttpStatus;
-import org.apache.dubbo.rpc.protocol.tri.rest.RestConstants;
 
+import org.apache.dubbo.rpc.protocol.tri.rest.cors.CorsHeaderFilter;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,6 +38,7 @@ public class CorsConsumerIT {
     private static final String providerAddress = System.getProperty("dubbo.address", "localhost");
 
     private static final Logger logger = Logger.getLogger(CorsConsumerIT.class.getName());
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(CorsConsumerIT.class);
 
     @Test
     public void testGlobalConfigAndClassConfig() {
@@ -48,25 +50,24 @@ public class CorsConsumerIT {
                 .retrieve()
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());
-
-        Assert.assertThrows(HttpClientErrorException.class, () -> {
-              defaultClient.post()
+        Assertions.assertThrows(HttpClientErrorException.class, () -> {
+            defaultClient.post()
                     .uri("http://" + providerAddress + ":50052/cors/hello")
                     .header("Content-type", "application/json")
                     .header("Origin", "http://not-example.com")
                     .retrieve()
                     .toEntity(String.class);
         });
-         result = defaultClient.options()
+
+        result = defaultClient.options()
                 .uri("http://" + providerAddress + ":50052/cors/hello")
                 .header("Content-type", "application/json")
                 .header("Origin", "http://example.com")
-                .header(RestConstants.ACCESS_CONTROL_REQUEST_METHOD, "GET")
-                 .header(RestConstants.ACCESS_CONTROL_REQUEST_HEADERS, "X-Requested-With","triple")
+                .header(CorsHeaderFilter.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+                 .header(CorsHeaderFilter.ACCESS_CONTROL_REQUEST_HEADERS, "X-Requested-With","triple")
                 .retrieve()
                 .toEntity(String.class);
-        logger.info(result.toString());
-        Assert.assertEquals("\"hello\"", result.getBody());
+        Assert.assertEquals(204, result.getStatusCode().value());
 
     }
 
@@ -112,6 +113,7 @@ public class CorsConsumerIT {
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());
 
+
         result = defaultClient.post()
                 .uri("http://" + providerAddress + ":50052/cors/methods")
                 .header("Content-type", "application/json")
@@ -119,16 +121,15 @@ public class CorsConsumerIT {
                 .retrieve()
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());
-
-
-        Assert.assertThrows(HttpClientErrorException.class, () -> {
-             defaultClient.head()
+        Assertions.assertThrows(HttpClientErrorException.class, () -> {
+            defaultClient.put()
                     .uri("http://" + providerAddress + ":50052/cors/methods")
                     .header("Content-type", "application/json")
                     .header("Origin", "http://example.com")
                     .retrieve()
                     .toEntity(String.class);
         });
+
     }
 
     @Test
@@ -193,7 +194,7 @@ public class CorsConsumerIT {
         ResponseEntity<String> result = defaultClient.options()
                 .uri("http://" + providerAddress + ":50052/cors/max-age")
                 .header("Content-type", "application/json")
-                .header(RestConstants.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+                .header(CorsHeaderFilter.ACCESS_CONTROL_REQUEST_METHOD, "GET")
                 .retrieve()
                 .toEntity(String.class);
         Assert.assertEquals("\"hello\"", result.getBody());

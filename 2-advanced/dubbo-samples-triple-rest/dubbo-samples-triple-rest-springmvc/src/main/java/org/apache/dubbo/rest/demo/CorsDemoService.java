@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/cors")
-@CrossOrigin(origins = "http://example.com", allowedHeaders = {"X-Requested-With", "Origin", "Content-Type", "Accept"}, maxAge = 3600)
+@CrossOrigin(origins = "http://example.com", allowedHeaders = {"X-Requested-With", "Origin", "Content-Type", "Accept"}, maxAge = 3600L)
 public interface CorsDemoService {
 
     @RequestMapping(value = "/hello", method = {RequestMethod.GET,RequestMethod.POST, RequestMethod.OPTIONS})
@@ -34,8 +34,8 @@ public interface CorsDemoService {
     String getMultiOrigin();
 
     @CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST})
-    @RequestMapping(value = "/methods", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.HEAD})
-    String getMethods( );
+    @RequestMapping(value = "/methods", method = {RequestMethod.GET, RequestMethod.POST})
+    String getMethods();
 
     @CrossOrigin(exposedHeaders = {"X-Custom-Header"})
     @RequestMapping(value = "/exposed-headers", method = RequestMethod.GET)
@@ -47,7 +47,7 @@ public interface CorsDemoService {
 
     @CrossOrigin(origins = "http://example.com", methods = {RequestMethod.PUT, RequestMethod.DELETE})
     @RequestMapping(value = "/put-delete", method = {RequestMethod.PUT, RequestMethod.DELETE})
-    String putDelete( );
+    String putDelete();
 
     @CrossOrigin(origins = "http://example.com", maxAge = 86400)
     @RequestMapping(value = "/max-age", method = {RequestMethod.GET, RequestMethod.OPTIONS})
